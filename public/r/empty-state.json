@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-state",
+  "title": "Empty state",
+  "description": "Turn an empty page into an invitation to start.",
+  "files": [
+    {
+      "path": "registry/empty-state.tsx",
+      "content": "\"use client\";\nexport interface EmptyStateProps {\n  title?: string;\n  description?: string;\n  actionLabel?: string;\n  onAction?: () => void;\n}\nexport function EmptyState({\n  title = \"A little space for your next idea.\",\n  description = \"Create your first project and make something worth keeping.\",\n  actionLabel = \"Create a project\",\n  onAction,\n}: EmptyStateProps) {\n  return (\n    <section className=\"w-full max-w-md rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-900\">\n      <div\n        aria-hidden=\"true\"\n        className=\"mx-auto mb-5 flex size-12 items-center justify-center rounded-xl bg-violet-100 text-2xl text-violet-700\"\n      >\n        +\n      </div>\n      <h3 className=\"text-lg font-semibold tracking-tight\">{title}</h3>\n      <p className=\"mx-auto mt-2 max-w-64 text-sm leading-relaxed text-slate-600\">\n        {description}\n      </p>\n      <button\n        type=\"button\"\n        onClick={onAction}\n        className=\"mt-5 min-h-11 rounded-xl bg-violet-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-violet-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-700\"\n      >\n        {actionLabel}\n      </button>\n    </section>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:block"
+}

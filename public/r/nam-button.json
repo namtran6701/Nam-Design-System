@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "nam-button",
+  "title": "Everyday button",
+  "description": "Three considered variants for everyday actions.",
+  "files": [
+    {
+      "path": "registry/nam-button.tsx",
+      "content": "\"use client\";\nimport type { ButtonHTMLAttributes } from \"react\";\n\nexport function NamButton({\n  variant = \"primary\",\n  className = \"\",\n  type = \"button\",\n  ...props\n}: ButtonHTMLAttributes<HTMLButtonElement> & {\n  variant?: \"primary\" | \"secondary\" | \"outline\";\n}) {\n  const variants = {\n    primary: \"bg-violet-700 text-white hover:bg-violet-800\",\n    secondary: \"bg-violet-100 text-violet-900 hover:bg-violet-200\",\n    outline:\n      \"border border-slate-300 bg-white text-slate-800 hover:bg-slate-50\",\n  };\n  return (\n    <button\n      type={type}\n      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-700 disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`}\n      {...props}\n    />\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

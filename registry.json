@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "nam-design-system",
+  "homepage": "https://github.com/namtran6701/Nam-Design-System",
+  "items": [
+    {
+      "name": "nam-button",
+      "type": "registry:ui",
+      "title": "Everyday button",
+      "description": "Three considered variants for everyday actions.",
+      "files": [{ "path": "registry/nam-button.tsx", "type": "registry:ui" }]
+    },
+    {
+      "name": "profile-card",
+      "type": "registry:block",
+      "title": "Profile card",
+      "description": "A personal introduction with room for a next step.",
+      "files": [
+        { "path": "registry/profile-card.tsx", "type": "registry:component" }
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:block",
+      "title": "Empty state",
+      "description": "Turn an empty page into an invitation to start.",
+      "files": [
+        { "path": "registry/empty-state.tsx", "type": "registry:component" }
+      ]
+    }
+  ]
+}

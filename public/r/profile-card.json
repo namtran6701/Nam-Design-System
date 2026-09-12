@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "profile-card",
+  "title": "Profile card",
+  "description": "A personal introduction with room for a next step.",
+  "files": [
+    {
+      "path": "registry/profile-card.tsx",
+      "content": "\"use client\";\nexport interface ProfileCardProps {\n  name?: string;\n  role?: string;\n  initials?: string;\n  available?: boolean;\n  onContact?: () => void;\n}\n\nexport function ProfileCard({\n  name = \"Alex Morgan\",\n  role = \"Product designer & maker\",\n  initials = \"AM\",\n  available = true,\n  onContact,\n}: ProfileCardProps) {\n  return (\n    <article className=\"w-full max-w-80 rounded-2xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm\">\n      <div className=\"mb-6 flex items-center justify-between\">\n        <div\n          className=\"flex size-14 items-center justify-center rounded-2xl bg-violet-100 text-xl font-semibold text-violet-800\"\n          aria-hidden=\"true\"\n        >\n          {initials}\n        </div>\n        <span className=\"rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600\">\n          {available ? \"Available for work\" : \"Currently booked\"}\n        </span>\n      </div>\n      <h3 className=\"text-xl font-semibold tracking-tight\">{name}</h3>\n      <p className=\"mt-1 text-sm text-slate-600\">{role}</p>\n      <button\n        type=\"button\"\n        onClick={onContact}\n        className=\"mt-6 flex min-h-11 w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-violet-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-700\"\n      >\n        Get in touch{\" \"}\n        <span className=\"ml-2\" aria-hidden=\"true\">\n          ↗\n        </span>\n      </button>\n    </article>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:block"
+}
