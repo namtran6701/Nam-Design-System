@@ -194,10 +194,9 @@ export default function App() {
             n<span>↗</span>
           </span>
           <span>
-            nam<span className="brand-subtitle">DESIGN SYSTEM</span>
+            nam<span className="brand-subtitle">Design System</span>
           </span>
         </a>
-        <div className="workspace-label">PERSONAL WORKSPACE</div>
         <nav aria-label="Collection categories">
           {categories.map(({ label, icon: Icon, match: inCategory }) => (
             <button
@@ -211,28 +210,10 @@ export default function App() {
             </button>
           ))}
         </nav>
-        <div className="sidebar-note">
-          <span className="mini-shapes" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </span>
-          <strong>Your ideas, on repeat.</strong>
-          <p>A home for the little things you’ll build with again.</p>
-          <button onClick={() => setGuide(true)}>
-            How to add a design <ArrowUpRight size={15} aria-hidden="true" />
-          </button>
-        </div>
         <a className="repo-link" href={repo} target="_blank" rel="noreferrer">
           <Code2 size={17} aria-hidden="true" /> GitHub repository{" "}
           <ArrowUpRight size={15} aria-hidden="true" />
         </a>
-        <div className="owner">
-          <span>NT</span>
-          <div>
-            Nam Tran<small>Personal collection</small>
-          </div>
-        </div>
       </aside>
       <main>
         <header className="topbar">
@@ -247,21 +228,51 @@ export default function App() {
         <div className="main-content">
           <section className="intro">
             <div>
-              <div className="eyebrow">COLLECT. CUSTOMIZE. CREATE.</div>
+              <div className="eyebrow">Your personal design collection</div>
               <h1>
                 Good design.
                 <br />
-                <span>Ready for your next idea.</span>
+                <span>Great things start here.</span>
               </h1>
               <p>
-                Your own shelf of components and building blocks.
+                Thoughtful components. Beautiful beginnings.
                 <br className="desktop-break" /> Find something you love. Make
-                it yours. Use it again.
+                it yours. Build something great.
               </p>
             </div>
-            <button className="primary-action" onClick={() => setGuide(true)}>
-              <Plus size={17} aria-hidden="true" /> Add a design
-            </button>
+            <div className="hero-actions">
+              <a className="primary-action" href="#collection">
+                Explore the collection{" "}
+                <ArrowDownToLine size={16} aria-hidden="true" />
+              </a>
+              <button className="text-action" onClick={() => setGuide(true)}>
+                Add a design <Plus size={17} aria-hidden="true" />
+              </button>
+            </div>
+            <div className="hero-art" aria-hidden="true">
+              <div className="art-orbit" />
+              <div className="art-panel art-panel-back">
+                <span />
+                <span />
+                <span />
+              </div>
+              <div className="art-panel art-panel-front">
+                <div className="art-icon">
+                  <Layers size={35} strokeWidth={1.4} />
+                </div>
+                <div className="art-line" />
+                <div className="art-line short" />
+                <div className="art-pill">
+                  <Check size={18} /> Made to be yours
+                </div>
+              </div>
+              <div className="art-tile">
+                <Code2 size={30} strokeWidth={1.6} />
+              </div>
+              <div className="art-caption">
+                A little detail. A lot of possibility.
+              </div>
+            </div>
           </section>
           <section className="workflow" aria-label="How the collection works">
             <div>
@@ -321,7 +332,7 @@ export default function App() {
                 )}
               </label>
             </div>
-            <div className="design-grid">
+            <div className="design-grid" key={category + query}>
               {items.map((item) => (
                 <article key={item.name} className="design-card">
                   <div className={`card-preview ${item.name}`}>

@@ -37,6 +37,7 @@ pnpm-debug.log*
 .eslintcache
 .stylelintcache
 coverage/
+.playwright-mcp/
 
 # Editors
 .vscode/*
