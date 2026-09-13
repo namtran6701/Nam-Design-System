@@ -1,4 +1,10 @@
-import { useState, type ReactNode } from "react";
+import {
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import {
   ArrowDownToLine,
   ArrowUpRight,
@@ -11,6 +17,7 @@ import {
   Search,
   Terminal,
   X,
+  type LucideIcon,
 } from "lucide-react";
 import catalog from "../registry.json";
 import { NamButton } from "../registry/nam-button";
@@ -22,64 +29,142 @@ const sources = import.meta.glob("../registry/*.tsx", {
   import: "default",
   eager: true,
 }) as Record<string, string>;
-type Item = (typeof catalog.items)[number];
+
+interface Item {
+  name: string;
+  type: string;
+  title: string;
+  description: string;
+  files: { path: string; type: string }[];
+}
+const designs: Item[] = catalog.items;
 const repo = "https://github.com/namtran6701/Nam-Design-System";
+
+const categories: {
+  label: string;
+  icon: LucideIcon;
+  match: (item: Item) => boolean;
+}[] = [
+  { label: "All designs", icon: Grid2X2, match: () => true },
+  {
+    label: "Components",
+    icon: Layers,
+    match: (item) => item.type === "registry:ui",
+  },
+  {
+    label: "Blocks",
+    icon: Code2,
+    match: (item) => item.type === "registry:block",
+  },
+];
+
+function typeLabel(type: string) {
+  return type.replace(/^registry:/, "").toUpperCase();
+}
+
 function command(item: Item) {
   return `npx shadcn@latest add ${new URL(`r/${item.name}.json`, new URL(".", window.location.href)).href}`;
 }
 
+function sourcesFor(item: Item) {
+  return item.files
+    .map((file) => ({ path: file.path, code: sources[`../${file.path}`] }))
+    .filter((file) => typeof file.code === "string");
+}
+
+function Modal({
+  labelledBy,
+  className,
+  onClose,
+  children,
+}: {
+  labelledBy: string;
+  className: string;
+  onClose: () => void;
+  children: ReactNode;
+}) {
+  const ref = useRef<HTMLDialogElement>(null);
+  useLayoutEffect(() => {
+    ref.current?.showModal();
+  }, []);
+  return (
+    <dialog
+      ref={ref}
+      className={className}
+      aria-labelledby={labelledBy}
+      onCancel={onClose}
+      onClick={(event) => {
+        const box = event.currentTarget.getBoundingClientRect();
+        const outside =
+          event.clientX < box.left ||
+          event.clientX > box.right ||
+          event.clientY < box.top ||
+          event.clientY > box.bottom;
+        if (event.detail > 0 && outside) onClose();
+      }}
+    >
+      {children}
+    </dialog>
+  );
+}
+
 export default function App() {
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All designs");
+  const [category, setCategory] = useState(categories[0].label);
   const [selected, setSelected] = useState<Item | null>(null);
   const [tab, setTab] = useState("Preview");
   const [guide, setGuide] = useState(false);
   const [notice, setNotice] = useState("");
   const [copied, setCopied] = useState("");
-  const previews: Record<string, ReactNode> = {
-    "nam-button": (
-      <div className="button-examples">
-        <NamButton onClick={() => setNotice("Primary button clicked")}>
-          Make it happen <ArrowUpRight size={16} aria-hidden="true" />
-        </NamButton>
-        <div>
-          <NamButton
-            variant="secondary"
-            onClick={() => setNotice("Secondary button clicked")}
-          >
-            Secondary
+  const previews: Record<string, ReactNode> = useMemo(
+    () => ({
+      "nam-button": (
+        <div className="button-examples">
+          <NamButton onClick={() => setNotice("Primary button clicked")}>
+            Make it happen <ArrowUpRight size={16} aria-hidden="true" />
           </NamButton>
-          <NamButton
-            variant="outline"
-            onClick={() => setNotice("Outline button clicked")}
-          >
-            Outline
-          </NamButton>
+          <div>
+            <NamButton
+              variant="secondary"
+              onClick={() => setNotice("Secondary button clicked")}
+            >
+              Secondary
+            </NamButton>
+            <NamButton
+              variant="outline"
+              onClick={() => setNotice("Outline button clicked")}
+            >
+              Outline
+            </NamButton>
+          </div>
         </div>
-      </div>
-    ),
-    "profile-card": (
-      <ProfileCard
-        onContact={() =>
-          setNotice("Contact clicked — connect this to your own contact flow.")
-        }
-      />
-    ),
-    "empty-state": (
-      <EmptyState
-        onAction={() =>
-          setNotice("Create clicked — connect this to your own project flow.")
-        }
-      />
-    ),
-  };
-  const items = catalog.items.filter(
+      ),
+      "profile-card": (
+        <ProfileCard
+          onContact={() =>
+            setNotice(
+              "Contact clicked — connect this to your own contact flow.",
+            )
+          }
+        />
+      ),
+      "empty-state": (
+        <EmptyState
+          onAction={() =>
+            setNotice("Create clicked — connect this to your own project flow.")
+          }
+        />
+      ),
+    }),
+    [],
+  );
+  const missingPreview = <p>Add a preview in src/App.tsx.</p>;
+  const match =
+    categories.find((entry) => entry.label === category)?.match ?? (() => true);
+  const items = designs.filter(
     (item) =>
-      (category === "All designs" ||
-        (category === "Components"
-          ? item.type === "registry:ui"
-          : item.type === "registry:block")) &&
-      `${item.title} ${item.description}`
+      match(item) &&
+      `${item.name} ${item.title} ${item.description}`
         .toLowerCase()
         .includes(query.toLowerCase()),
   );
@@ -114,28 +199,17 @@ export default function App() {
         </a>
         <div className="workspace-label">PERSONAL WORKSPACE</div>
         <nav aria-label="Collection categories">
-          {["All designs", "Components", "Blocks"].map((label, i) => {
-            const Icon = [Grid2X2, Layers, Code2][i];
-            return (
-              <button
-                key={label}
-                aria-current={category === label ? "page" : undefined}
-                onClick={() => setCategory(label)}
-              >
-                <Icon size={18} aria-hidden="true" />
-                {label}
-                <span>
-                  {i === 0
-                    ? catalog.items.length
-                    : catalog.items.filter((x) =>
-                        i === 1
-                          ? x.type === "registry:ui"
-                          : x.type === "registry:block",
-                      ).length}
-                </span>
-              </button>
-            );
-          })}
+          {categories.map(({ label, icon: Icon, match: inCategory }) => (
+            <button
+              key={label}
+              aria-pressed={category === label}
+              onClick={() => setCategory(label)}
+            >
+              <Icon size={18} aria-hidden="true" />
+              {label}
+              <span>{designs.filter(inCategory).length}</span>
+            </button>
+          ))}
         </nav>
         <div className="sidebar-note">
           <span className="mini-shapes" aria-hidden="true">
@@ -251,15 +325,11 @@ export default function App() {
               {items.map((item) => (
                 <article key={item.name} className="design-card">
                   <div className={`card-preview ${item.name}`}>
-                    {previews[item.name] ?? (
-                      <p>Add a preview in src/App.tsx.</p>
-                    )}
+                    {previews[item.name] ?? missingPreview}
                   </div>
                   <div className="card-info">
                     <div>
-                      <span className="item-type">
-                        {item.type === "registry:ui" ? "COMPONENT" : "BLOCK"}
-                      </span>
+                      <span className="item-type">{typeLabel(item.type)}</span>
                       <h3>
                         <button onClick={() => open(item)}>
                           {item.title}
@@ -286,7 +356,7 @@ export default function App() {
                 <button
                   onClick={() => {
                     setQuery("");
-                    setCategory("All designs");
+                    setCategory(categories[0].label);
                   }}
                 >
                   Reset filters
@@ -315,17 +385,10 @@ export default function App() {
         </div>
       )}
       {selected && (
-        <dialog
-          aria-labelledby="design-title"
-          open
-          ref={(el) => {
-            if (el && !el.matches(":modal")) {
-              el.close();
-              el.showModal();
-            }
-          }}
-          onCancel={() => setSelected(null)}
+        <Modal
+          labelledBy="design-title"
           className="detail-dialog"
+          onClose={() => setSelected(null)}
         >
           <div className="dialog-heading">
             <div>
@@ -359,21 +422,25 @@ export default function App() {
           </div>
           {tab === "Preview" ? (
             <div className={`detail-preview ${selected.name}`}>
-              {previews[selected.name]}
+              {previews[selected.name] ?? missingPreview}
             </div>
           ) : (
-            <div className="source-panel">
-              <button
-                onClick={() =>
-                  copy(sources[`../${selected.files[0].path}`], "source")
-                }
-              >
-                {copied === "source" ? "Copied" : "Copy source"}
-              </button>
-              <pre>
-                <code>{sources[`../${selected.files[0].path}`]}</code>
-              </pre>
-            </div>
+            sourcesFor(selected).map(({ path, code }) => (
+              <div className="source-panel" key={path}>
+                <button onClick={() => copy(code, path)}>
+                  {copied === path ? "Copied" : "Copy source"}
+                </button>
+                <pre tabIndex={0} aria-label={path}>
+                  <code>{code}</code>
+                </pre>
+              </div>
+            ))
+          )}
+          {tab === "Code" && !sourcesFor(selected).length && (
+            <p className="dialog-description">
+              No source found for this design. Registry files must live directly
+              in <code>registry/</code> to appear here.
+            </p>
           )}
           <div className="install">
             <h3>
@@ -399,20 +466,13 @@ export default function App() {
                 : "Copies the source into your app. Customize it freely; updates are not automatic."}
             </small>
           </div>
-        </dialog>
+        </Modal>
       )}
       {guide && (
-        <dialog
-          aria-labelledby="guide-title"
-          open
-          ref={(el) => {
-            if (el && !el.matches(":modal")) {
-              el.close();
-              el.showModal();
-            }
-          }}
-          onCancel={() => setGuide(false)}
+        <Modal
+          labelledBy="guide-title"
           className="guide-dialog"
+          onClose={() => setGuide(false)}
         >
           <div className="dialog-heading">
             <h2 id="guide-title">Add to your collection</h2>
@@ -463,7 +523,7 @@ export default function App() {
           >
             Open the full guide <ArrowUpRight size={16} aria-hidden="true" />
           </a>
-        </dialog>
+        </Modal>
       )}
     </div>
   );

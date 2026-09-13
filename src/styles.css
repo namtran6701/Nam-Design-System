@@ -1,5 +1,6 @@
 @import "tailwindcss";
 :root {
+  color-scheme: light;
   font-family: "DM Sans", sans-serif;
   color: #252835;
   background: #f7f8fc;
@@ -634,6 +635,9 @@ dialog::backdrop {
   background: #f7f8fc;
   border: 1px solid var(--border);
   border-radius: 12px;
+}
+.source-panel + .source-panel {
+  margin-top: 12px;
 }
 .source-panel > button {
   display: block;

@@ -1,5 +1,4 @@
 node_modules
 dist
 public/r
-public/registry.json
 package-lock.json

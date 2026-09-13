@@ -8,6 +8,7 @@
       "type": "registry:ui",
       "title": "Everyday button",
       "description": "Three considered variants for everyday actions.",
+      "dependencies": ["tailwind-merge"],
       "files": [{ "path": "registry/nam-button.tsx", "type": "registry:ui" }]
     },
     {

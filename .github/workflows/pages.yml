@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: pages-${{ github.ref }}
+  group: build-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   build:
@@ -19,7 +19,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm run format:check
       - run: npm run build
+      - name: Check committed registry output is current
+        run: git diff --exit-code -- public/r
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request'
         with:
@@ -30,6 +33,9 @@ jobs:
     permissions:
       pages: write
       id-token: write
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

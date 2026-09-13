@@ -1,5 +1,6 @@
 "use client";
 import type { ButtonHTMLAttributes } from "react";
+import { twMerge } from "tailwind-merge";
 
 export function NamButton({
   variant = "primary",
@@ -18,7 +19,11 @@ export function NamButton({
   return (
     <button
       type={type}
-      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-700 disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`}
+      className={twMerge(
+        "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-700 disabled:cursor-not-allowed disabled:opacity-50",
+        variants[variant],
+        className,
+      )}
       {...props}
     />
   );
