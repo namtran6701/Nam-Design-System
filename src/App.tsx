@@ -27,6 +27,7 @@ import designPrinciples from "./design-principles.txt?raw";
 import { Button as MotionButton } from "../registry/motion-button";
 import { NamButton } from "../registry/nam-button";
 import { ProfileCard } from "../registry/profile-card";
+import { FeedbackWidget } from "../registry/feedback-widget";
 import { EmptyState } from "../registry/empty-state";
 
 const sources = import.meta.glob("../registry/*.tsx", {
@@ -189,6 +190,17 @@ export default function App() {
             )
           }
         />
+      ),
+      "feedback-widget": (
+        <div className="feedback-example">
+          <p>Have an idea? Try the feedback button.</p>
+          <span>Interactive demo · nothing is sent</span>
+          <FeedbackWidget
+            onSubmit={() =>
+              new Promise<void>((resolve) => window.setTimeout(resolve, 900))
+            }
+          />
+        </div>
       ),
       "empty-state": (
         <EmptyState

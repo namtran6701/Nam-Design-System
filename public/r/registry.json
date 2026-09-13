@@ -52,6 +52,25 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "feedback-widget",
+      "type": "registry:block",
+      "title": "Feedback widget",
+      "description": "A corner trigger that expands into a feedback form, with sending, success, and retry states.",
+      "dependencies": ["lucide-react", "motion", "tailwind-merge"],
+      "files": [
+        {
+          "path": "registry/feedback-widget.tsx",
+          "type": "registry:component",
+          "target": "components/feedback-widget/feedback-widget.tsx"
+        },
+        {
+          "path": "registry/motion-button.tsx",
+          "type": "registry:component",
+          "target": "components/feedback-widget/motion-button.tsx"
+        }
+      ]
     }
   ]
 }
