@@ -16,9 +16,9 @@ export function ProfileCard({
 }: ProfileCardProps) {
   return (
     <article className="w-full max-w-80 rounded-2xl border border-neutral-200 bg-white p-6 text-neutral-900 shadow-sm">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div
-          className="flex size-14 items-center justify-center rounded-2xl bg-neutral-100 text-xl font-semibold text-neutral-800"
+          className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-neutral-100 text-xl font-semibold text-neutral-800"
           aria-hidden="true"
         >
           {initials}
