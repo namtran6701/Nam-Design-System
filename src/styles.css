@@ -361,46 +361,6 @@ h1 span {
   transform: rotate(12deg);
   animation: float-back 7s ease-in-out -2s infinite;
 }
-.art-caption {
-  position: absolute;
-  bottom: 3px;
-  width: 100%;
-  text-align: center;
-  font-size: 11px;
-  color: var(--muted);
-}
-.workflow {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 38px;
-  padding: 25px 30px;
-  margin: 10px 0 58px;
-  border-block: 1px solid var(--border);
-}
-.workflow > div {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.workflow > div > span {
-  color: var(--muted);
-}
-.workflow p {
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-}
-.workflow small {
-  display: block;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 400;
-  margin-top: 3px;
-}
-.workflow-arrow {
-  color: #ababab;
-}
 .collection-toolbar {
   display: flex;
   align-items: center;
@@ -596,24 +556,6 @@ h2 {
 }
 .card-footer button span {
   margin-left: 6px;
-}
-.page-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 35px;
-  font-size: 12px;
-  color: var(--muted);
-}
-.page-footer button {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  background: none;
-  border: 0;
-  min-height: 44px;
-  font-size: 12px;
 }
 .no-results {
   padding: 70px 20px;
@@ -1168,4 +1110,96 @@ dialog::backdrop {
     animation: none !important;
     scroll-behavior: auto !important;
   }
+}
+
+.principles-section {
+  margin-top: 80px;
+  padding-top: 56px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.65fr);
+  align-items: start;
+  gap: 72px;
+}
+.principles-heading {
+  position: sticky;
+  top: 108px;
+}
+.principles-heading h2 {
+  margin-top: 12px;
+}
+.principles-text {
+  padding: 32px 36px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--surface);
+}
+.principle + .principle {
+  margin-top: 28px;
+}
+.principle h3 {
+  font-size: 17px;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-bottom: 8px;
+}
+.principle p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #515151;
+  white-space: pre-wrap;
+}
+@media (max-width: 800px) {
+  .principles-section {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: 52px;
+    padding-top: 36px;
+  }
+  .principles-heading {
+    position: static;
+  }
+  .principles-heading > p {
+    max-width: 60ch;
+  }
+}
+@media (max-width: 560px) {
+  .principles-text {
+    padding: 24px;
+    border-radius: 20px;
+  }
+  .principle p {
+    font-size: 15px;
+  }
+}
+
+.collection {
+  padding-top: 32px;
+}
+.principles-section {
+  padding-bottom: 32px;
+}
+
+.principles-text {
+  position: relative;
+}
+.principles-copy {
+  float: right;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -10px -10px 8px 12px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--muted);
+}
+.principles-copy:hover {
+  background: var(--canvas);
+  color: var(--ink);
+}
+.principles-copy:active {
+  transform: scale(0.94);
 }

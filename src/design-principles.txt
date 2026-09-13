@@ -1,0 +1,26 @@
+Clarity without clutter
+Make the interface self-explanatory through hierarchy, layout, clear controls, and meaningful feedback. Do not add text to explain what the UI already communicates. Remove filler, slogans, redundant captions, and instructions beside obvious actions. Use a familiar copy icon inside a text panel, with an accessible name and a checkmark for confirmation; omit redundant visible labels and instructions. When text is necessary, make it clear, concise, and useful. Keep essential labels, error messages, and accessible names.
+
+Visual direction
+Use black, white, and neutral grays: #1d1d1d for text and actions, #ffffff for surfaces, #f5f5f5 for the canvas, and #6e6e6e for secondary text. Reserve color for meaningful states, paired with a label or icon.
+
+Typography
+Use -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif. Set body text at 16–18px with 1.5–1.6 line height, controls at 14px, and secondary labels at 12–13px. Use 28–32px section headings and responsive 40–64px hero headings. Keep weights at 400–650 and let text wrap naturally.
+
+Layout and hierarchy
+Make the main task obvious. Give each section one purpose and one primary action. Use a 4, 8, 12, 16, 24, 32, 48, 64px spacing scale and reading widths around 60–70 characters. Prefer whitespace to decorative containers. Use subtle dividers, restrained shadows, 12px control corners, and 20–24px card corners.
+
+Motion
+Let motion communicate state, hierarchy, and relationships without explanatory captions. Prefer transform and opacity: 150–250ms control feedback, 300–450ms dialog transitions, and 600–900ms entrances with small staggers. Avoid excessive bounce or movement. Keep ambient animation away from reading areas. Under prefers-reduced-motion, remove nonessential movement and show the final state. Essential feedback must remain understandable without animation.
+
+Interaction and accessibility
+Make every control work and label actions directly. Provide relevant hover, pressed, focus, loading, disabled, success, and error states. Use touch targets of at least 44 by 44px, keyboard navigation, visible focus, accessible names, and Escape dismissal for dialogs. Maintain 4.5:1 contrast for normal text and 3:1 for large text. Do not rely on color, hover, icons, or motion alone when their meaning is ambiguous.
+
+Content
+Use sentence case, familiar words, and the shortest wording that preserves meaning. Include text only when it identifies content, clarifies a choice, enables an action, or explains a necessary next step. Keep empty states and errors actionable. Avoid repeated headings, decorative claims, and implementation details outside technical tasks.
+
+Responsive behavior
+Stack cramped columns, allow text to wrap, and prevent horizontal page scrolling. Keep controls reachable and readable. Preserve content and functionality across mobile and desktop.
+
+Delivery
+Follow the task's explicit requirements and preserve existing behavior. Reuse project components and tokens. Remove unnecessary copy before delivery. Check desktop, mobile, keyboard focus, reduced motion, empty states, and main interactions. Run relevant build checks and keep generated screenshots out of application source changes.

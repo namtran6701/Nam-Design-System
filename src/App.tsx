@@ -20,6 +20,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import catalog from "../registry.json";
+import designPrinciples from "./design-principles.txt?raw";
 import { NamButton } from "../registry/nam-button";
 import { ProfileCard } from "../registry/profile-card";
 import { EmptyState } from "../registry/empty-state";
@@ -229,24 +230,15 @@ export default function App() {
             Workspace <span className="slash">/</span>{" "}
             <strong>Collection</strong>
           </span>
-          <span className="react-label">
-            <span /> Built for React
-          </span>
         </header>
         <div className="main-content">
           <section className="intro">
             <div>
-              <div className="eyebrow">Your personal design collection</div>
               <h1>
-                Good design.
+                Components.
                 <br />
-                <span>Great things start here.</span>
+                <span>Ready to use.</span>
               </h1>
-              <p>
-                Thoughtful components. Beautiful beginnings.
-                <br className="desktop-break" /> Find something you love. Make
-                it yours. Build something great.
-              </p>
             </div>
             <div className="hero-actions">
               <a className="primary-action" href="#collection">
@@ -271,47 +263,12 @@ export default function App() {
                 <div className="art-line" />
                 <div className="art-line short" />
                 <div className="art-pill">
-                  <Check size={18} /> Made to be yours
+                  <Check size={18} />
                 </div>
               </div>
               <div className="art-tile">
                 <Code2 size={30} strokeWidth={1.6} />
               </div>
-              <div className="art-caption">
-                A little detail. A lot of possibility.
-              </div>
-            </div>
-          </section>
-          <section className="workflow" aria-label="How the collection works">
-            <div>
-              <span>
-                <Code2 size={18} aria-hidden="true" />
-              </span>
-              <p>
-                Save your code<small>One React file to start</small>
-              </p>
-            </div>
-            <span className="workflow-arrow" aria-hidden="true">
-              →
-            </span>
-            <div>
-              <span>
-                <Grid2X2 size={18} aria-hidden="true" />
-              </span>
-              <p>
-                See it live<small>Preview every detail</small>
-              </p>
-            </div>
-            <span className="workflow-arrow" aria-hidden="true">
-              →
-            </span>
-            <div>
-              <span>
-                <ArrowDownToLine size={18} aria-hidden="true" />
-              </span>
-              <p>
-                Bring it with you<small>Install in your next app</small>
-              </p>
             </div>
           </section>
           <section id="collection" className="collection">
@@ -383,13 +340,49 @@ export default function App() {
               </div>
             )}
           </section>
-          <footer className="page-footer">
-            <span>A growing collection. A familiar starting point.</span>
-            <button onClick={() => setGuide(true)}>
-              Make room for your next design{" "}
-              <Plus size={15} aria-hidden="true" />
-            </button>
-          </footer>
+          <section
+            id="design-principles"
+            className="principles-section"
+            aria-labelledby="principles-title"
+          >
+            <div className="principles-heading">
+              <h2 id="principles-title">Design principles</h2>
+            </div>
+            <article
+              className="principles-text"
+              aria-label="Agent design instructions"
+            >
+              <button
+                className="principles-copy"
+                aria-label="Copy design principles"
+                title={
+                  copied === "principles" ? "Copied" : "Copy design principles"
+                }
+                onClick={() => copy(designPrinciples, "principles")}
+              >
+                {copied === "principles" ? (
+                  <Check size={18} aria-hidden="true" />
+                ) : (
+                  <Copy size={18} aria-hidden="true" />
+                )}
+              </button>
+              <span className="sr-only" role="status">
+                {copied === "principles" ? "Design principles copied" : ""}
+              </span>
+              {designPrinciples
+                .trim()
+                .split("\n\n")
+                .map((section) => {
+                  const [title, ...body] = section.split("\n");
+                  return (
+                    <div className="principle" key={title}>
+                      <h3>{title}</h3>
+                      <p>{body.join("\n")}</p>
+                    </div>
+                  );
+                })}
+            </article>
+          </section>
         </div>
       </main>
       {notice && (
