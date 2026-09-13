@@ -189,12 +189,20 @@ export default function App() {
         Skip to collection
       </a>
       <aside className="sidebar">
-        <a className="brand" href="./" aria-label="Nam design system home">
-          <span className="brand-mark">
-            n<span>↗</span>
-          </span>
+        <a
+          className="brand"
+          href="./"
+          aria-label="Favorite Design Components home"
+        >
+          <img
+            className="brand-mark"
+            src={`${import.meta.env.BASE_URL}new_logo.svg`}
+            width="42"
+            height="42"
+            alt=""
+          />
           <span>
-            nam<span className="brand-subtitle">Design System</span>
+            Favorite<span className="brand-subtitle">Design Components</span>
           </span>
         </a>
         <nav aria-label="Collection categories">

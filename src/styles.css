@@ -7,13 +7,13 @@
   background: var(--canvas);
   font-synthesis: none;
   -webkit-font-smoothing: antialiased;
-  --ink: #1d1d1f;
-  --muted: #6e6e73;
-  --border: #dedee3;
-  --accent: #0066cc;
-  --surface: #fff;
-  --canvas: #f5f5f7;
-  --lavender: #e8f2ff;
+  --ink: #1d1d1d;
+  --muted: #6e6e6e;
+  --border: #dedede;
+  --accent: #1d1d1d;
+  --surface: #ffffff;
+  --canvas: #f5f5f5;
+  --selected: #f1f1f1;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 * {
@@ -80,7 +80,7 @@ p {
   gap: 30px;
   padding: 12px max(32px, calc((100vw - 1200px) / 2));
   border-bottom: 1px solid #0000000d;
-  background: #fafafbd9;
+  background: #fafafad9;
   backdrop-filter: blur(24px) saturate(180%);
 }
 .brand {
@@ -93,21 +93,14 @@ p {
   flex-shrink: 0;
 }
 .brand-mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: var(--ink);
-  color: white;
-  font-size: 28px;
-  letter-spacing: -5px;
-  padding-right: 5px;
+  display: block;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  transition: transform 0.5s var(--ease);
 }
-.brand-mark span {
-  font-size: 20px;
-  margin-top: -8px;
+.brand:hover .brand-mark {
+  transform: rotate(-5deg);
 }
 .brand-subtitle {
   display: block;
@@ -121,7 +114,7 @@ p {
   display: flex;
   padding: 4px;
   border-radius: 30px;
-  background: #e9e9ed;
+  background: #e9e9e9;
   gap: 2px;
 }
 .sidebar nav button {
@@ -135,7 +128,7 @@ p {
   padding: 10px 18px;
   min-height: 44px;
   font-size: 13px;
-  color: #515155;
+  color: #515151;
   white-space: nowrap;
 }
 .sidebar nav button svg {
@@ -180,7 +173,7 @@ p {
 }
 .slash {
   margin: 0 12px;
-  color: #b3b3b8;
+  color: #b3b3b3;
 }
 .react-label {
   display: flex;
@@ -191,7 +184,7 @@ p {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #28834a;
+  background: #6c6c6c;
 }
 .main-content {
   max-width: 1264px;
@@ -250,9 +243,9 @@ h1 span {
   font-weight: 500;
 }
 .primary-action:hover {
-  background: #0071e3;
+  background: #616161;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px #0066cc20;
+  box-shadow: 0 6px 20px #58585820;
 }
 .primary-action:active {
   transform: scale(0.97);
@@ -282,23 +275,23 @@ h1 span {
 .art-orbit {
   position: absolute;
   inset: 15px 0 -5px;
-  background: radial-gradient(ellipse, #cddfff80, transparent 68%);
+  background: radial-gradient(ellipse, #dddddd80, transparent 68%);
   border-radius: 50%;
 }
 .art-panel {
   position: absolute;
   width: 205px;
   height: 235px;
-  border: 1px solid #fff;
+  border: 1px solid #ffffff;
   border-radius: 28px;
   box-shadow:
-    0 20px 45px #25334b14,
+    0 20px 45px #32323214,
     inset 0 1px 0 white;
 }
 .art-panel-back {
   top: 21px;
   left: 135px;
-  background: linear-gradient(140deg, #fefefe, #d9e6f5);
+  background: linear-gradient(140deg, #fefefe, #e4e4e4);
   transform: rotate(12deg);
   padding: 34px 28px;
   animation: float-back 7s ease-in-out infinite;
@@ -306,7 +299,7 @@ h1 span {
 .art-panel-back span {
   display: block;
   height: 9px;
-  background: #bacbe050;
+  background: #c9c9c950;
   border-radius: 9px;
   margin-bottom: 15px;
 }
@@ -314,7 +307,7 @@ h1 span {
   top: 65px;
   left: 54px;
   padding: 27px;
-  background: linear-gradient(145deg, #ffffffed, #f5f8ffd9);
+  background: linear-gradient(145deg, #ffffffed, #f8f8f8d9);
   backdrop-filter: blur(15px);
   transform: rotate(-9deg);
   animation: float-front 7s ease-in-out infinite;
@@ -326,14 +319,14 @@ h1 span {
   align-items: center;
   justify-content: center;
   border-radius: 19px;
-  background: linear-gradient(145deg, #63aeff, #0066cc);
+  background: linear-gradient(145deg, #a4a4a4, #585858);
   color: white;
-  box-shadow: 0 6px 15px #0066cc25;
+  box-shadow: 0 6px 15px #58585825;
 }
 .art-line {
   width: 116px;
   height: 9px;
-  background: #cdd4df;
+  background: #d3d3d3;
   border-radius: 8px;
   margin-top: 22px;
 }
@@ -341,7 +334,7 @@ h1 span {
   width: 80px;
   height: 7px;
   margin-top: 10px;
-  background: #e2e6ed;
+  background: #e6e6e6;
 }
 .art-pill {
   margin-top: 22px;
@@ -349,7 +342,7 @@ h1 span {
   align-items: center;
   gap: 5px;
   font-size: 11px;
-  color: #4e657b;
+  color: #626262;
 }
 .art-tile {
   position: absolute;
@@ -364,7 +357,7 @@ h1 span {
   border-radius: 22px;
   background: #ffffffd9;
   color: var(--accent);
-  box-shadow: 0 10px 30px #25334b15;
+  box-shadow: 0 10px 30px #32323215;
   transform: rotate(12deg);
   animation: float-back 7s ease-in-out -2s infinite;
 }
@@ -406,7 +399,7 @@ h1 span {
   margin-top: 3px;
 }
 .workflow-arrow {
-  color: #ababaf;
+  color: #ababab;
 }
 .collection-toolbar {
   display: flex;
@@ -436,7 +429,7 @@ h2 {
   min-height: 44px;
   padding: 0 14px;
   color: var(--muted);
-  background: #eaeaee;
+  background: #eaeaea;
   border: 1px solid transparent;
   border-radius: 13px;
   transition:
@@ -507,17 +500,17 @@ h2 {
   justify-content: center;
 }
 .nam-button {
-  background: radial-gradient(ellipse at 50% 30%, #fff, #eaf1fc);
+  background: radial-gradient(ellipse at 50% 30%, #ffffff, #f0f0f0);
 }
 .profile-card {
-  background: linear-gradient(150deg, #eff2f5, #e6ebf1);
+  background: linear-gradient(150deg, #f2f2f2, #eaeaea);
 }
 .empty-state {
-  background: linear-gradient(150deg, #f3f1f7, #eae7f1);
+  background: linear-gradient(150deg, #f2f2f2, #e8e8e8);
 }
 .card-preview > article {
   padding: 22px;
-  box-shadow: 0 12px 24px #26344d0a;
+  box-shadow: 0 12px 24px #3333330a;
 }
 .card-preview > section {
   padding: 25px 18px;
@@ -590,7 +583,7 @@ h2 {
   align-items: center;
   gap: 8px;
   min-height: 64px;
-  border-top: 1px solid #eeeef0;
+  border-top: 1px solid #eeeeee;
   font-size: 11px;
   color: var(--muted);
 }
@@ -647,8 +640,8 @@ h2 {
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: #252835;
-  color: #fff;
+  background: #282828;
+  color: #ffffff;
   border-radius: 12px;
   padding: 12px 16px;
   display: flex;
@@ -657,7 +650,7 @@ h2 {
   z-index: 20;
   font-size: 13px;
   max-width: calc(100vw - 32px);
-  box-shadow: 0 8px 30px #25283520;
+  box-shadow: 0 8px 30px #28282820;
 }
 .toast button {
   background: none;
@@ -677,10 +670,10 @@ dialog {
   width: min(760px, calc(100vw - 32px));
   max-height: 90dvh;
   overflow: auto;
-  box-shadow: 0 20px 100px #25283533;
+  box-shadow: 0 20px 100px #28282833;
 }
 dialog::backdrop {
-  background: #25283570;
+  background: #28282870;
   backdrop-filter: blur(4px);
 }
 .dialog-heading {
@@ -723,11 +716,11 @@ dialog::backdrop {
   border: 0;
   border-radius: 8px;
   font-size: 12px;
-  background: #f6f7fa;
+  background: #f7f7f7;
 }
 .view-tabs button[aria-pressed="true"] {
   color: var(--accent);
-  background: var(--lavender);
+  background: var(--selected);
 }
 .detail-preview {
   min-height: 320px;
@@ -739,7 +732,7 @@ dialog::backdrop {
 }
 .source-panel {
   position: relative;
-  background: #f7f8fc;
+  background: #f8f8f8;
   border: 1px solid var(--border);
   border-radius: 12px;
 }
@@ -783,7 +776,7 @@ dialog::backdrop {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #f6f7fb;
+  background: #f7f7f7;
   border: 1px solid var(--border);
   border-radius: 9px;
   padding: 10px 12px;
@@ -823,7 +816,7 @@ dialog::backdrop {
 }
 .guide-dialog code {
   font-size: 12px;
-  background: #f2f0f8;
+  background: #f1f1f1;
   padding: 3px 5px;
   border-radius: 4px;
 }
@@ -845,12 +838,12 @@ dialog {
   animation: dialog-in 0.4s var(--ease);
 }
 dialog::backdrop {
-  background: #1d1d1f40;
+  background: #1d1d1d40;
   backdrop-filter: blur(10px);
   animation: fade-in 0.3s ease;
 }
 .view-tabs {
-  background: #ededf0;
+  background: #ededed;
   border-radius: 12px;
   padding: 4px;
   width: fit-content;
