@@ -7,10 +7,12 @@ import {
 } from "react";
 import {
   ArrowDownToLine,
+  ArrowRight,
+  Download,
+  Trash2,
   ArrowUpRight,
   Check,
   Code2,
-  Copy,
   Grid2X2,
   Layers,
   Plus,
@@ -19,8 +21,10 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
+import { CopyButton } from "./components/CopyButton";
 import catalog from "../registry.json";
 import designPrinciples from "./design-principles.txt?raw";
+import { Button as MotionButton } from "../registry/motion-button";
 import { NamButton } from "../registry/nam-button";
 import { ProfileCard } from "../registry/profile-card";
 import { EmptyState } from "../registry/empty-state";
@@ -93,6 +97,7 @@ function Modal({
       ref={ref}
       className={className}
       aria-labelledby={labelledBy}
+      tabIndex={0}
       onCancel={onClose}
       onClick={(event) => {
         const box = event.currentTarget.getBoundingClientRect();
@@ -116,7 +121,6 @@ export default function App() {
   const [tab, setTab] = useState("Preview");
   const [guide, setGuide] = useState(false);
   const [notice, setNotice] = useState("");
-  const [copied, setCopied] = useState("");
   const previews: Record<string, ReactNode> = useMemo(
     () => ({
       "nam-button": (
@@ -137,6 +141,38 @@ export default function App() {
             >
               Outline
             </NamButton>
+          </div>
+        </div>
+      ),
+      "motion-button": (
+        <div className="motion-button-examples">
+          <div>
+            <MotionButton>
+              Continue <ArrowRight size={16} aria-hidden="true" />
+            </MotionButton>
+            <MotionButton variant="secondary">
+              <Download size={16} aria-hidden="true" /> Download
+            </MotionButton>
+            <MotionButton variant="outline">Outline</MotionButton>
+            <MotionButton variant="ghost">Ghost</MotionButton>
+          </div>
+          <div>
+            <MotionButton size="sm">Small</MotionButton>
+            <MotionButton>Medium</MotionButton>
+            <MotionButton size="lg">Large</MotionButton>
+            <MotionButton
+              variant="secondary"
+              size="icon"
+              aria-label="Delete example"
+            >
+              <Trash2 size={16} aria-hidden="true" />
+            </MotionButton>
+          </div>
+          <div>
+            <MotionButton ripple>Ripple</MotionButton>
+            <MotionButton variant="outline" pressScale={0.85}>
+              Tap me
+            </MotionButton>
           </div>
         </div>
       ),
@@ -169,17 +205,6 @@ export default function App() {
         .toLowerCase()
         .includes(query.toLowerCase()),
   );
-  async function copy(text: string, key: string) {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(key);
-      setTimeout(() => setCopied(""), 2000);
-    } catch {
-      setNotice(
-        "Clipboard unavailable. Select the command or source text and copy it manually.",
-      );
-    }
-  }
   function open(item: Item) {
     setSelected(item);
     setTab("Preview");
@@ -351,24 +376,13 @@ export default function App() {
             <article
               className="principles-text"
               aria-label="Agent design instructions"
+              tabIndex={0}
             >
-              <button
+              <CopyButton
                 className="principles-copy"
-                aria-label="Copy design principles"
-                title={
-                  copied === "principles" ? "Copied" : "Copy design principles"
-                }
-                onClick={() => copy(designPrinciples, "principles")}
-              >
-                {copied === "principles" ? (
-                  <Check size={18} aria-hidden="true" />
-                ) : (
-                  <Copy size={18} aria-hidden="true" />
-                )}
-              </button>
-              <span className="sr-only" role="status">
-                {copied === "principles" ? "Design principles copied" : ""}
-              </span>
+                label="Copy design principles"
+                text={designPrinciples}
+              />
               {designPrinciples
                 .trim()
                 .split("\n\n")
@@ -439,9 +453,7 @@ export default function App() {
           ) : (
             sourcesFor(selected).map(({ path, code }) => (
               <div className="source-panel" key={path}>
-                <button onClick={() => copy(code, path)}>
-                  {copied === path ? "Copied" : "Copy source"}
-                </button>
+                <CopyButton label="Copy source code" text={code} />
                 <pre tabIndex={0} aria-label={path}>
                   <code>{code}</code>
                 </pre>
@@ -461,16 +473,11 @@ export default function App() {
             <p>Run in a React + Tailwind project with shadcn initialized.</p>
             <div className="command">
               <code>{command(selected)}</code>
-              <button
-                aria-label="Copy install command"
-                onClick={() => copy(command(selected), "command")}
-              >
-                {copied === "command" ? (
-                  <Check size={18} />
-                ) : (
-                  <Copy size={18} />
-                )}
-              </button>
+              <CopyButton
+                key={selected.name}
+                label="Copy install command"
+                text={command(selected)}
+              />
             </div>
             <small>
               {["localhost", "127.0.0.1"].includes(window.location.hostname)

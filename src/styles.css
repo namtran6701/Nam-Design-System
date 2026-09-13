@@ -49,7 +49,9 @@ a {
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
-pre:focus-visible {
+pre:focus-visible,
+dialog:focus-visible,
+.principles-text:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 4px;
 }
@@ -610,8 +612,12 @@ dialog {
   border-radius: 18px;
   padding: 28px;
   width: min(760px, calc(100vw - 32px));
-  max-height: 90dvh;
-  overflow: auto;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
   box-shadow: 0 20px 100px #28282833;
 }
 dialog::backdrop {
@@ -681,15 +687,7 @@ dialog::backdrop {
 .source-panel + .source-panel {
   margin-top: 12px;
 }
-.source-panel > button {
-  display: block;
-  margin: 10px 10px 0 auto;
-  font-size: 12px;
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  background: white;
-  padding: 8px;
-}
+
 .source-panel pre {
   max-height: 360px;
   overflow: auto;
@@ -728,17 +726,7 @@ dialog::backdrop {
   overflow-wrap: anywhere;
   flex: 1;
 }
-.command button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 40px;
-  min-height: 40px;
-  border: 0;
-  background: white;
-  border-radius: 6px;
-  color: var(--accent);
-}
+
 .guide-dialog {
   max-width: 580px;
 }
@@ -822,9 +810,7 @@ dialog::backdrop {
   min-width: 44px;
   min-height: 44px;
 }
-.source-panel > button {
-  min-height: 44px;
-}
+
 .intro > div:first-child,
 .hero-actions {
   animation: reveal 0.9s var(--ease) both;
@@ -1183,23 +1169,94 @@ dialog::backdrop {
 
 .principles-text {
   position: relative;
+  max-height: 70vh;
+  max-height: 70dvh;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  overflow-wrap: anywhere;
 }
-.principles-copy {
-  float: right;
+
+/* Keep scroll affordances visible even with macOS overlay scrollbars. */
+dialog::-webkit-scrollbar,
+.principles-text::-webkit-scrollbar {
+  width: 10px;
+}
+dialog::-webkit-scrollbar-thumb,
+.principles-text::-webkit-scrollbar-thumb {
+  background: #a3a3a3;
+  border: 2px solid var(--surface);
+  border-radius: 10px;
+}
+dialog::-webkit-scrollbar-track,
+.principles-text::-webkit-scrollbar-track {
+  margin-block: 24px;
+}
+.copy-button {
   display: grid;
   place-items: center;
+  flex-shrink: 0;
   width: 44px;
   height: 44px;
-  margin: -10px -10px 8px 12px;
+  padding: 0;
   border: 0;
   border-radius: 12px;
   background: transparent;
   color: var(--muted);
 }
-.principles-copy:hover {
+.copy-button:hover {
   background: var(--canvas);
   color: var(--ink);
 }
-.principles-copy:active {
+.copy-button:active {
   transform: scale(0.94);
+}
+.principles-copy {
+  float: right;
+  margin: -10px -10px 8px 12px;
+}
+.source-panel > .copy-button {
+  margin: 10px 10px 0 auto;
+}
+
+.motion-button {
+  background: #141414;
+  color-scheme: dark;
+}
+.motion-button-examples {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.motion-button-examples > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.motion-button-examples button {
+  font-family: inherit;
+  font-weight: 500;
+  transition-property: background-color, color, border-color;
+}
+.motion-button-examples button:focus-visible {
+  outline-color: #a3a3a3;
+}
+@media (pointer: coarse) {
+  .motion-button-examples button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+.motion-button-examples .text-xs {
+  font-size: 12px;
+}
+.motion-button-examples .text-sm {
+  font-size: 14px;
+}
+.motion-button-examples .text-base {
+  font-size: 16px;
 }
