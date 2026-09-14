@@ -21,6 +21,8 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
+import { ScrollProgressPreview } from "./components/ScrollProgressPreview";
+import { HookSidebarPreview } from "./components/HookSidebarPreview";
 import { CopyButton } from "./components/CopyButton";
 import catalog from "../registry.json";
 import designPrinciples from "./design-principles.txt?raw";
@@ -129,6 +131,8 @@ export default function App() {
   const [notice, setNotice] = useState("");
   const previews: Record<string, ReactNode> = useMemo(
     () => ({
+      "hook-sidebar": <HookSidebarPreview />,
+      "scroll-progress": <ScrollProgressPreview />,
       "nam-button": (
         <div className="button-examples">
           <NamButton onClick={() => setNotice("Primary button clicked")}>

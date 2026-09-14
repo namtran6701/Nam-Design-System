@@ -71,6 +71,32 @@
           "target": "components/feedback-widget/motion-button.tsx"
         }
       ]
+    },
+    {
+      "name": "hook-sidebar",
+      "type": "registry:ui",
+      "title": "Hook sidebar \u2014 desktop",
+      "description": "Favorite desktop scrolling navigation with an animated hook rail. For screens 1024px and wider.",
+      "dependencies": ["motion", "tailwind-merge"],
+      "files": [
+        {
+          "path": "registry/hook-sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scroll-progress",
+      "type": "registry:ui",
+      "title": "Scroll progress \u2014 mobile",
+      "description": "A floating progress pill that expands into section navigation. For screens below 1024px.",
+      "dependencies": ["motion", "tailwind-merge"],
+      "files": [
+        {
+          "path": "registry/scroll-progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
